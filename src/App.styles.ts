@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.div`
   background-color: #39393A;
   min-height: 100vh;
-  `;
+`;
 
 export const Area = styled.div`
   max-width: 950px;
@@ -61,5 +61,4 @@ export const FileInput = styled.input<{valor: boolean}>`
       opacity: 1;
     }
   }
-
 `;

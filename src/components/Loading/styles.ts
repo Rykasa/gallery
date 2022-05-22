@@ -1,14 +1,10 @@
 import styled from "styled-components";
 
 export const Loading = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 90px;
-
-  .small-spin{
-    margin: 0;
-  }
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  transform: translateX(-50%);
 
   .loading{
     animation: spin 2s infinite ease-in-out;
