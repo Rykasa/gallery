@@ -6,6 +6,10 @@ export const Loading = styled.div`
   justify-content: center;
   margin-top: 90px;
 
+  .small-spin{
+    margin: 0;
+  }
+
   .loading{
     animation: spin 2s infinite ease-in-out;
   }

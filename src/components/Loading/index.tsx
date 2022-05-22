@@ -1,6 +1,7 @@
 import * as C from './styles'
 import { CircleNotch} from 'phosphor-react'
 
+
 export function Loading(){
   return(
     <C.Loading>

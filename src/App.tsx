@@ -1,16 +1,19 @@
 import { FileX, FileDotted ,Trash, CircleNotch } from 'phosphor-react'
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { Image } from './types/Image'
 import * as C from './App.styles'
 import { Header } from './components/Header'
-import { getAll } from './services/images'
+import { getAll, insert } from './services/images'
 import { Photo } from './components/Photo'
 import { Loading } from './components/Loading'
-import { FileArea } from './components/FileArea'
 
 export function App(){
   const [isLoading, setIsLoading] = useState(false)
   const [photoList, setPhotoList] = useState<Image[]>([])
+  const [selectedFile, setSelectedFile] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
+
+
 
   useEffect(() =>{
     const getPhotos = async () =>{
@@ -21,12 +24,36 @@ export function App(){
     getPhotos()
   }, [])
 
+  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) =>{
+    e.preventDefault()
+
+    const formData = new FormData(e.currentTarget)
+    const file = formData.get('image') as File
+
+    if(file && file.size > 0){
+      setIsUploading(true)
+      const result = await insert(file)
+      setIsUploading(false)
+
+      if(result instanceof Error){
+        alert(`${result.name} - ${result.message}`)
+      }else{
+        let newPhotoList = [...photoList]
+        newPhotoList.push(result)
+        setPhotoList(newPhotoList)
+      }
+    }
+  }
+
   return(
     <C.Container>
       <Header />
       <C.Area>
 
-        <FileArea />
+        <C.UploadForm method="POST" onSubmit={handleFormSubmit}>
+          <C.FileInput type="file" name="image" onClickCapture={() => setSelectedFile(true)} valor={selectedFile} />
+          <input type="submit" value={isUploading ? "Sending" : "Send"} />
+        </C.UploadForm>
 
         {isLoading && <Loading />}
         
