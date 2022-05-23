@@ -1,4 +1,4 @@
-import { FileX, FileDotted ,Trash, CircleNotch, TextAlignCenter } from 'phosphor-react'
+import { FileX } from 'phosphor-react'
 import { FormEvent, useEffect, useState } from 'react'
 import { Image } from './types/Image'
 import * as C from './App.styles'
@@ -66,14 +66,15 @@ export function App(){
         {isLoading && <Loading />}
         {isDeleting && <Loading />}
              
-        {photoList.length > 0 ? (
 
+        {photoList.length > 0 && (
           <C.ImageList>
             {photoList.map((image, index)=>(
               <Photo key={index} url={image.url} name={image.name} handleDeleteImage={handleDeleteImage}/>
             ))}
           </C.ImageList>
-        ) : (
+        )}
+        {photoList.length == 0 && !isLoading && (
           <div className="empty" style={{paddingTop: "50px", display: "flex", flexDirection: "column", gap: "10px"}}>
             <FileX size="80px" color="#CAC4CE" style={{display: "flex", margin: "auto"}} />
             <span style={{color: "#CAC4CE", textAlign: 'center'}}>Galeria vazia</span>
